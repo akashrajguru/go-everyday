@@ -20,6 +20,7 @@ func main() {
 	var graviry float64 = 9.81
 	var isReady bool = true
 	const appVersion = "1.0.2"
+	// 7. Let's print our new variables and constant:
 	fmt.Println("Gravity:", graviry)
 	fmt.Println("Ready:", isReady)
 	fmt.Println("App Version:", appVersion)
@@ -29,4 +30,5 @@ func main() {
 	var currentDay int = 2
 	var progress float64 = 0.1
 	fmt.Println("The Goal is to", goal, " today is day ", currentDay, "and progress is ", progress)
+
 }
