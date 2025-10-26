@@ -28,7 +28,7 @@ func main() {
 
 	const goal = "Learn Go"
 	var currentDay int = 2
-	var progress float64 = 0.1
+	var progress float64 = 0.2
 	fmt.Println("The Goal is to", goal, " today is day ", currentDay, "and progress is ", progress)
 
 }
