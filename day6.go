@@ -42,4 +42,15 @@ func main() {
 		fmt.Println("Score is above the limit of", limit)
 	}
 
+	temp := 25
+
+	// The logic here is flawed!
+	if temp > 20 {
+		fmt.Println("It's hot.")
+	} else if temp > 10 {
+		fmt.Println("It's warm.")
+	} else {
+		fmt.Println("It's cold.")
+	}
+
 }
