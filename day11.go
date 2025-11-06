@@ -10,6 +10,8 @@ type Counter struct {
 }
 
 // Define method on counter struct
+// (c *Counter) is the pointer receiver.
+// This method 'Increment' is now "attached" to Counter.
 func (c *Counter) Increment() {
 	c.value++
 	fmt.Println("Incrementing Value is now: ", c.value)
