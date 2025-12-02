@@ -14,7 +14,8 @@ type Result struct {
 func Ping(url string) Result {
 	start := time.Now()
 
-	resp, err := http.Get(url)
+	client := http.Client{Timeout: 2 * time.Second}
+	resp, err := client.Get(url)
 
 	duration := time.Since(start)
 
