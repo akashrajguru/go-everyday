@@ -1,4 +1,4 @@
-package kcli
+package main
 
 import "kcli/cmd"
 
