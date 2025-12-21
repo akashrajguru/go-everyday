@@ -44,9 +44,9 @@ var editCmd = &cobra.Command{
 		}
 
 		fmt.Println("Edit complete. Configuration saved.")
-
 		// Cleanup remove the temp file
-		os.Remove(fileName)
+		defer os.Remove(fileName)
+		fmt.Println("File Deleted")
 	},
 }
 

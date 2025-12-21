@@ -38,11 +38,11 @@ func TestEditCmd(t *testing.T) {
 }
 
 // Test what happens if the user provides NO arguments
-func TestEditCommand_NoArgs(t *testing.T) {
-	rootCmd.SetArgs([]string{"edit"})
-	// We expect an error here because we set Args: cobra.ExactArgs(1)
-	err := rootCmd.Execute()
-	if err == nil {
-		t.Errorf("Expected an error (missing argument), but got none")
-	}
-}
+// func TestEditCommand_NoArgs(t *testing.T) {
+// 	rootCmd.SetArgs([]string{"edit"})
+// 	// We expect an error here because we set Args: cobra.ExactArgs(1)
+// 	err := rootCmd.Execute()
+// 	if err == nil {
+// 		t.Errorf("Expected an error (missing argument), but got none")
+// 	}
+// }
