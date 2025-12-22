@@ -26,8 +26,14 @@ var editCmd = &cobra.Command{
 		// we will create dummy file to edit (Simulating fetching current config)
 		fileName := "temp_config.yaml"
 		initialContent := []byte(fmt.Sprintf("apiVersion: v1\nkind: pod\nmetadata:\n name: %s\n", resourceName))
-		_ = os.WriteFile(fileName, initialContent, 0644)
+		if err := os.WriteFile(fileName, initialContent, 0644); err != nil {
+			fmt.Printf("Error creating temp file: %v\n", err)
+			return
+		}
 
+		// Schedule the removal immediately after creation.
+		// This guarantees it runs when the function exits.
+		defer os.Remove(fileName)
 		// Lets prepare the command
 		// tell os to run editor on our file
 		command := exec.Command(editor, fileName)
@@ -44,9 +50,6 @@ var editCmd = &cobra.Command{
 		}
 
 		fmt.Println("Edit complete. Configuration saved.")
-		// Cleanup remove the temp file
-		defer os.Remove(fileName)
-		fmt.Println("File Deleted")
 	},
 }
 
