@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"io"
 	"os"
+	"strings"
+	"testing"
 )
 
 // Helper function to capture stdout
@@ -27,4 +29,23 @@ func captureOutput(f func()) string {
 	var buf bytes.Buffer
 	io.Copy(&buf, r)
 	return buf.String()
+}
+
+func TestGetPods(t *testing.T) {
+	// Setup the arguments for the commands
+	// we will simulate running "kcli get pods"
+	rootCmd.SetArgs([]string{"get", "pods"})
+
+	// Run the command inside our capture helper
+	output := captureOutput(func() {
+		if err := rootCmd.Execute(); err != nil {
+			t.Fatalf("Command executed with error: %v", err)
+		}
+	})
+
+	// Assertions
+	expectedPod := "nginx-75b"
+	if !strings.Contains(output, expectedPod) {
+		t.Errorf("Expected output to contain '%s', but got:\n%s", expectedPod, output)
+	}
 }
