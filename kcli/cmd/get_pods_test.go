@@ -49,3 +49,18 @@ func TestGetPods(t *testing.T) {
 		t.Errorf("Expected output to contain '%s', but got:\n%s", expectedPod, output)
 	}
 }
+
+// Lets test -o json
+func TestGetPodsJSON(t *testing.T) {
+	// test the JSON flag: "Kcli get podss -o json"
+	rootCmd.SetArgs([]string{"get", "pods", "-o", "json"})
+
+	output := captureOutput(func() {
+		_ = rootCmd.Execute()
+	})
+
+	// Check if output actually contains JSON structures
+	if !strings.Contains(output, "\"kind\": \"PodList\"") {
+		t.Errorf("Expected JSON output, but got:\n%s", output)
+	}
+}
