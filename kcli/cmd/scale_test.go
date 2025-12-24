@@ -22,3 +22,7 @@ func TestScaleCommand(t *testing.T) {
 		t.Errorf("Output didn't match expectation. Got:\n%s", output)
 	}
 }
+
+func TestScaleCommand_ZeroReplicas(t *testing.T) {
+	// Test 2. Login Chaeck : Test the warning for 0 replicas
+}
