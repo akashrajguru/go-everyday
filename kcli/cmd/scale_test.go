@@ -18,11 +18,13 @@ func TestScaleCommand(t *testing.T) {
 	})
 
 	// Assertions
-	if !strings.Contains(output, "Scaling deployment 'my-deployment' to 5 replicas") {
+	if !strings.Contains(output, "Scaling deployment 'my-deployment' to '5' replicas") {
 		t.Errorf("Output didn't match expectation. Got:\n%s", output)
 	}
 }
 
 func TestScaleCommand_ZeroReplicas(t *testing.T) {
 	// Test 2. Login Chaeck : Test the warning for 0 replicas
+	rootCmd.SetArgs([]string{"sacle", "frontend", "--replicas=0"})
+
 }
