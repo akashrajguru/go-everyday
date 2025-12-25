@@ -25,6 +25,14 @@ func TestScaleCommand(t *testing.T) {
 
 func TestScaleCommand_ZeroReplicas(t *testing.T) {
 	// Test 2. Login Chaeck : Test the warning for 0 replicas
-	rootCmd.SetArgs([]string{"sacle", "frontend", "--replicas=0"})
+	rootCmd.SetArgs([]string{"scale", "frontend", "--replicas=0"})
+
+	output := captureOutput(func() {
+		_ = rootCmd.Execute()
+	})
+
+	if !strings.Contains(output, "WARNING: Scaling to 0") {
+		t.Errorf("Expected waring message for 0 replicas, but got:\n%s", output)
+	}
 
 }
