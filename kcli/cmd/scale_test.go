@@ -36,3 +36,22 @@ func TestScaleCommand_ZeroReplicas(t *testing.T) {
 	}
 
 }
+
+func TestScaleCommand_MissingFlag(t *testing.T) {
+	// 1. CRITICAL FIX: Reset the flag's "Changed" state.
+	// This makes Cobra forget that the flag was set in a previous test.
+	scaleCmd.Flags().Lookup("replicas").Changed = false
+	// Test Case 3: Missing the required flag
+	// Command "kcli scale backend" (forgot --replicas)
+	rootCmd.SetArgs([]string{"scale", "backend"})
+	err := rootCmd.Execute()
+
+	if err == nil {
+		t.Fatal("Expected error because 'replicas' flag is messing, but got nil")
+	}
+
+	// Verify the error
+	if !strings.Contains(err.Error(), "required flag(s) \"replicas\" not set") {
+		t.Errorf("Unexpected error message: %v", err)
+	}
+}
