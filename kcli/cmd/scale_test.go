@@ -55,3 +55,12 @@ func TestScaleCommand_MissingFlag(t *testing.T) {
 		t.Errorf("Unexpected error message: %v", err)
 	}
 }
+
+func TestScaleCommand_MissingArg(t *testing.T) {
+	// Test Case 4: Missing the resource name
+	rootCmd.SetArgs([]string{"scale", "--replicas=3"})
+	err := rootCmd.Execute()
+	if err == nil {
+		t.Fatal("Expected error because resource name is missing, but got nil")
+	}
+}
