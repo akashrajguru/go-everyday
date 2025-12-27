@@ -48,6 +48,7 @@ func TestScaleCommand_MissingFlag(t *testing.T) {
 	// though 'Changed = false' is usually enough to trigger the required check.
 	replicas = 1
 	rootCmd.SetArgs([]string{"scale", "backend"})
+	// We expect Execute() to return an error here
 	err := rootCmd.Execute()
 
 	if err == nil {
