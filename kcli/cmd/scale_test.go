@@ -43,6 +43,10 @@ func TestScaleCommand_MissingFlag(t *testing.T) {
 	scaleCmd.Flags().Lookup("replicas").Changed = false
 	// Test Case 3: Missing the required flag
 	// Command "kcli scale backend" (forgot --replicas)
+
+	// Optional: Reset the variable to its default if needed,
+	// though 'Changed = false' is usually enough to trigger the required check.
+	replicas = 1
 	rootCmd.SetArgs([]string{"scale", "backend"})
 	err := rootCmd.Execute()
 
