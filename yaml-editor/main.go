@@ -25,6 +25,20 @@ func main() {
 
 	fmt.Println("Original config:")
 	fmt.Printf("%+v\n\n", config)
+
+	// Lets use writeYAMl function
+	// Edit values
+	config.Version = "2.0.0"
+	fmt.Println("Modified config:")
+	fmt.Printf("%+v\n\n", config)
+
+	// Write back to file
+	err = writeYAML(filename, config)
+	if err != nil {
+		log.Fatalf("Error writing YAML: %v", err)
+	}
+
+	fmt.Println("Successfully updated", filename)
 }
 
 // Function readYAML to read YAML file and unmarshals it into a config struct
@@ -40,4 +54,18 @@ func readYAML(filename string) (*Config, error) {
 	}
 
 	return &config, nil
+}
+
+func writeYAML(filename string, config *Config) error {
+	data, err := yaml.Marshal(config)
+	if err != nil {
+		return fmt.Errorf("failded to marshal YAML: %w", err)
+	}
+
+	err = os.WriteFile(filename, data, 0644)
+	if err != nil {
+		return fmt.Errorf("failed to write file: %w", err)
+	}
+
+	return nil
 }
