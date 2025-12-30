@@ -10,8 +10,17 @@ import (
 
 // config struct represents the structure of YALM file.
 type Config struct {
-	Name    string `yaml:"name"`
-	Version string `yaml:"version"`
+	Name     string            `yaml:"name"`
+	Version  string            `yaml:"version"`
+	Database DatabaseConfig    `yaml:"database"`
+	Settings map[string]string `yaml:"settings"`
+}
+
+type DatabaseConfig struct {
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
 }
 
 func main() {
@@ -29,6 +38,9 @@ func main() {
 	// Lets use writeYAMl function
 	// Edit values
 	config.Version = "2.0.0"
+	config.Database.Host = "localhost"
+	config.Database.Port = 5432
+	config.Settings["environment"] = "production"
 	fmt.Println("Modified config:")
 	fmt.Printf("%+v\n\n", config)
 
