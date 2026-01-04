@@ -29,3 +29,12 @@ func (p PostgresDB) Save(data string) error {
 func (p PostgresDB) Get(id string) (string, error) {
 	return "data from PostgreSQL", nil
 }
+
+type SMTPEmailer struct {
+	host string
+}
+
+func (s SMTPEmailer) Send(to, subject, body string) error {
+	fmt.Printf("Sending email via SMTP tp %s: %s\n", to, subject)
+	return nil
+}
