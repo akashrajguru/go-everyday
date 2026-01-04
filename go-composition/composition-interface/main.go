@@ -38,3 +38,25 @@ func (s SMTPEmailer) Send(to, subject, body string) error {
 	fmt.Printf("Sending email via SMTP tp %s: %s\n", to, subject)
 	return nil
 }
+
+// Services that uses composition
+type UserService struct {
+	db    Database
+	email EmailSender
+}
+
+func NewUserService(db Database, email EmailSender) *UserService {
+	return &UserService{db: db, email: email}
+}
+
+func (u *UserService) RegisterUser(username, email string) error {
+	// save user to database
+	if err := u.db.Save(username); err != nil {
+		return err
+	}
+	// send welcome email
+	if err := u.email.Send(email, "Welcome!", "Thanks for registering!"); err != nil {
+		return err
+	}
+	return nil
+}
