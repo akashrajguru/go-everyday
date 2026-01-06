@@ -60,3 +60,34 @@ func (u *UserService) RegisterUser(username, email string) error {
 	}
 	return nil
 }
+
+// Mock implementation for testing
+type MockDB struct {
+	SaveFunc func(data string) error
+	GetFunc  func(id string) (string, error)
+}
+
+func (m MockDB) Save(data string) error {
+	if m.SaveFunc != nil {
+		return m.SaveFunc(data)
+	}
+	return nil
+}
+
+func (m MockDB) Get(id string) (string, error) {
+	if m.GetFunc != nil {
+		return m.GetFunc(id)
+	}
+	return "", nil
+}
+
+type MockEmailer struct {
+	SendFunc func(to, subject, body string) error
+}
+
+func (m MockEmailer) Send(to, subject, body string) error {
+	if m.SendFunc != nil {
+		return m.SendFunc(to, subject, body)
+	}
+	return nil
+}
