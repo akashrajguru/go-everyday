@@ -91,3 +91,42 @@ func (m MockEmailer) Send(to, subject, body string) error {
 	}
 	return nil
 }
+
+// Write example tests
+func TestRegisterUser_Success() {
+	MockDB := MockDB{
+		SaveFunc: func(data string) error {
+			fmt.Printf("Mock: saved:%s\n", data)
+			return nil
+		},
+	}
+
+	mockEmail := MockEmailer{
+		SendFunc: func(to, subject, body string) error {
+			fmt.Printf("Mock: sent email to %s\n", to)
+			return nil
+		},
+	}
+
+	// Inject mock into service
+	service := NewUserService(MockDB, mockEmail)
+
+	// Test
+	err := service.RegisterUser("John_deo", "john@example.com")
+	if err != nil {
+		fmt.Printf("Test failed: %v\n", err)
+	} else {
+		fmt.Println("Test Passed: user registered successfully")
+	}
+}
+
+func main() {
+	fmt.Println("------- Production Usage---------")
+	prodDB := PostgresDB{connectionString: "postgres://..."}
+	prodEmail := SMTPEmailer{host: "smtp.example.com"}
+	prodService := NewUserService(prodDB, prodEmail)
+	prodService.RegisterUser("alice", "alice@example.com")
+
+	fmt.Println("\n------ Testing Scenarios-------")
+	TestRegisterUser_Success()
+}
