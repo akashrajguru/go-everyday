@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // Define interfaces for behavior contracts
 // Why it matters: By coding to interfaces rather than concrete types,
@@ -120,6 +123,26 @@ func TestRegisterUser_Success() {
 	}
 }
 
+// Write test registration user db error
+func TestRegisterUser_DatabaseError() {
+	mockDB := MockDB{
+		SaveFunc: func(data string) error {
+			return errors.New("database connection error")
+		},
+	}
+
+	MockEmailer := MockEmailer{}
+
+	service := NewUserService(mockDB, MockEmailer)
+
+	err := service.RegisterUser("John_deo", "john@example.com")
+	if err != nil {
+		fmt.Println(" Test Passed: Correctly handled database error")
+	} else {
+		fmt.Println("Test failed: Should have returned an error")
+	}
+}
+
 func main() {
 	fmt.Println("------- Production Usage---------")
 	prodDB := PostgresDB{connectionString: "postgres://..."}
@@ -129,4 +152,6 @@ func main() {
 
 	fmt.Println("\n------ Testing Scenarios-------")
 	TestRegisterUser_Success()
+	fmt.Println()
+	TestRegisterUser_DatabaseError()
 }
